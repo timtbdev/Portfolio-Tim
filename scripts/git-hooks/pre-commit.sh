@@ -1,23 +1,17 @@
 #!/bin/sh
 echo "Running static analysis..."
 
-JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-export JAVA_HOME
-
-OUTPUT="/tmp/analysis-result"
-./gradlew detekt ktlintCheck lint spotlessCheck --daemon > ${OUTPUT}
-EXIT_CODE=$?
-if [ ${EXIT_CODE} -ne 0 ]; then
-    cat ${OUTPUT}
-    rm ${OUTPUT}
+./gradlew detekt ktlintCheck lintDevDebug spotlessKotlinCheck --daemon
+status=$?
+if [ "$status" = 0 ]; then
+    echo "*********************************************"
+    echo "      Static analysis no problems found      "
+    echo "*********************************************"
+    exit 0
+else
     echo "*********************************************"
     echo "            Static Analysis Failed           "
     echo "Please fix the above issues before committing"
     echo "*********************************************"
-    exit ${EXIT_CODE}
-else
-    rm ${OUTPUT}
-    echo "*********************************************"
-    echo "      Static analysis no problems found      "
-    echo "*********************************************"
+    exit 1
 fi

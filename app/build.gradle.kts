@@ -162,5 +162,4 @@ dependencies {
     implementAllKapts(Deps.Androidx.kapts)
     implementAllTests(Deps.Androidx.tests)
     implementAll(Deps.Network.dependencies)
-
 }
