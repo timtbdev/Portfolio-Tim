@@ -11,24 +11,20 @@
  * limitations under the License.
  */
 
-package plugins
+package constants
 
-import io.gitlab.arturbosch.detekt.detekt
+object Build {
+    const val MIN_SDK: Int = 21
+    const val TARGET_SDK: Int = 30
+    const val COMPILE_SDK: Int = 30
+    const val BUILD_TOOLS: String = "30.0.0"
+    const val ANDROID_JUNIT_RUNNER: String = "androidx.test.runner.AndroidJUnitRunner"
 
-plugins {
-    id("io.gitlab.arturbosch.detekt")
-}
-
-detekt {
-    input = files("src/main/java", "src/main/kotlin")
-    reports {
-        xml {
-            enabled = true
-            destination = file("build/reports/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("build/reports/detekt.html")
-        }
+    object App {
+        const val ID: String = "timtb.portfolio"
+        const val VERSION_CODE: Int = 1
+        const val VERSION_NAME: String = "1.0.0.0"
     }
 }
+
+

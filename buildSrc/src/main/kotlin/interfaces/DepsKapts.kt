@@ -11,6 +11,9 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package interfaces
+
+interface DepsKapts {
+    val dependencies: List<String>
+    val kapts: List<String>
+}

@@ -11,6 +11,13 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package constants
+
+import interfaces.BuildTypes
+
+object BuildTypeDebug : BuildTypes {
+    override val isMinifyEnabled = false
+    override val isCrashlyticsEnabled = false
+    override val isTestCoverageEnabled = true
+    override val isDebuggable = true
+}

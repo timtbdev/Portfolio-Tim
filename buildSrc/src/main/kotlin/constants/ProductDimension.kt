@@ -11,6 +11,8 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package constants
+
+object ProductDimension {
+    const val ENVIRONMENT = "environment"
+}

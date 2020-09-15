@@ -11,6 +11,3 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)

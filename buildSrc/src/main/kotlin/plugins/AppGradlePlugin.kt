@@ -11,6 +11,15 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package plugins
+
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+
+open class AppGradlePlugin : Plugin<Project> {
+    override fun apply(project: Project) {
+        project.configureAppPlugins()
+        project.configureAndroidApp()
+        project.configureAppDependencies()
+    }
+}

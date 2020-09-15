@@ -11,6 +11,8 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package interfaces
+
+interface Deps {
+    val dependencies: List<String>
+}

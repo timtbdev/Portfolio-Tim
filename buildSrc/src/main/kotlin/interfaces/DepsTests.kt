@@ -11,6 +11,9 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package interfaces
+
+interface DepsTests {
+    val dependencies: List<String>
+    val tests: List<String>
+}

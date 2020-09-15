@@ -11,145 +11,46 @@
  * limitations under the License.
  */
 
-import com.android.build.gradle.internal.dsl.BuildType
+import constants.Plugins
+import constants.Versions
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.apply
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
-/** Plugin Extensions --------------------------------------------------------------------- */
-
-// Android Application Plugin
+// Android Application Plugin Dependency Extension -------------------------------------------------
 val PluginDependenciesSpec.androidApplication: PluginDependencySpec
     get() = id(Plugins.ANDROID_APPLICATION)
 
-// Kotlin Plugins
-val PluginDependenciesSpec.kotlinAndroid: PluginDependencySpec
-    get() = id(Plugins.KOTLIN_ANDROID)
+// Module Plugin Dependency Extensions -------------------------------------------------------------
+val PluginDependenciesSpec.appGradlePlugin: PluginDependencySpec
+    get() = id(Plugins.APP_GRADLE_PLUGIN)
 
-val PluginDependenciesSpec.kotlinAndroidExtensions: PluginDependencySpec
-    get() = id(Plugins.KOTLIN_ANDROID_EXTENSIONS)
+// Static Analyzer Plugin Dependency Extensions ----------------------------------------------------
+// DependencyUpdate
+val PluginDependenciesSpec.applyUpdate: PluginDependencySpec
+    get() = id(Plugins.UPDATE).version(Versions.UPDATE)
 
-val PluginDependenciesSpec.kotlinKapt: PluginDependencySpec
-    get() = id(Plugins.KOTLIN_KAPT)
+// Ktlint
+val PluginDependenciesSpec.applyKtlint: PluginDependencySpec
+    get() = id(Plugins.KTLINT).version(Versions.KTLINT)
 
-// Google Services
-val PluginDependenciesSpec.googleServices: PluginDependencySpec
-    get() = id(Plugins.GOOGLE)
-
-// Firebase Crashlytics
-val PluginDependenciesSpec.firebaseCrashlytics: PluginDependencySpec
-    get() = id(Plugins.FIREBASE_CRASHLYTICS)
-
-// Firebase Performance
-val PluginDependenciesSpec.firebasePerformance: PluginDependencySpec
-    get() = id(Plugins.FIREBASE_PERFORMANCE)
-
-val PluginDependenciesSpec.navigationSafeArgs: PluginDependencySpec
-    get() = id(Plugins.NAVIGATION)
-
-val PluginDependenciesSpec.daggerHilt: PluginDependencySpec
-    get() = id(Plugins.HILT)
-
-// Static analyzer plugins
-val Project.applyUpdate
-    get() = apply(plugin = Plugins.UPDATE)
-
-val Project.applySpotless
-    get() = apply(plugin = Plugins.SPOTLESS)
-
-val Project.applyKtlint
+val Project.addKtlint
     get() = apply(plugin = Plugins.KTLINT)
 
-val Project.applyDetekt
+// Detekt
+val PluginDependenciesSpec.applyDetekt: PluginDependencySpec
+    get() = id(Plugins.DETEKT).version(Versions.DETEKT)
+
+val Project.addDetekt
     get() = apply(plugin = Plugins.DETEKT)
 
-val Project.applyGitHooks
-    get() = apply(plugin = Plugins.GITHOOKS)
-
-/** BuildConfig Extensions --------------------------------------------------------------------- */
-
-/** Adds a new string field to the generated BuildConfig class. */
-fun BuildType.buildConfigStringField(name: String, value: String) {
-    this.buildConfigField("String", name, "\"$value\"")
-}
-
-/** Adds a new integer field to the generated BuildConfig class. */
-fun BuildType.buildConfigIntField(name: String, value: Int) {
-    this.buildConfigField("int", name, value.toString())
-}
-
-/** Adds a new boolean field to the generated BuildConfig class. */
-fun BuildType.buildConfigBooleanField(name: String, value: Boolean) {
-    this.buildConfigField("boolean", name, value.toString())
-}
-
-/** Dependency Extensions ---------------------------------------------------------------------- */
-
-/** Adds a dependency debugImplementation to the configuration. **/
-fun DependencyHandler.debugImplementation(dependencyNotation: String): Dependency? =
-    add("debugImplementation", dependencyNotation)
-
-/** Adds a dependency implementation to the configuration. **/
-fun DependencyHandler.implementation(dependencyNotation: String): Dependency? =
-    add("implementation", dependencyNotation)
-
-/** Adds a dependency api to the configuration. **/
-fun DependencyHandler.api(dependencyNotation: String): Dependency? =
-    add("api", dependencyNotation)
-
-/** Adds a dependency kapt to the configuration. **/
-fun DependencyHandler.kapt(dependencyNotation: String): Dependency? =
-    add("kapt", dependencyNotation)
-
-/** Adds a dependency testImplementation to the configuration. **/
-fun DependencyHandler.testImplementation(dependencyNotation: String): Dependency? =
-    add("testImplementation", dependencyNotation)
-
-/** Adds a dependency testRuntimeOnly to the configuration. **/
-fun DependencyHandler.testRuntimeOnly(dependencyNotation: String): Dependency? =
-    add("testRuntimeOnly", dependencyNotation)
-
-/** Adds a dependency androidTestImplementation to the configuration. **/
-fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dependency? =
-    add("androidTestImplementation", dependencyNotation)
-
-/** Adds a list of dependencies implementation to the configuration. **/
-fun DependencyHandler.implementAll(list: List<String>) {
-    list.forEach {
-        add("implementation", it)
-    }
-}
-
-/** Adds a list of test dependencies implementation to the configuration. **/
-fun DependencyHandler.implementAllTests(list: List<String>) {
-    list.forEach {
-        testImplementation(it)
-    }
-}
-
-/** Adds a list of test dependencies implementation to the configuration. **/
-fun DependencyHandler.implementAllAndroidTests(list: List<String>) {
-    list.forEach {
-        androidTestImplementation(it)
-    }
-}
-
-/** Adds a list of test dependencies implementation to the configuration. **/
-fun DependencyHandler.implementAllKapts(list: List<String>) {
-    list.forEach {
-        kapt(it)
-    }
-}
-
-/** Repository Extensions ---------------------------------------------------------------------- */
+// Repository Handler Extensions -------------------------------------------------------------------
 fun RepositoryHandler.applyDefault() {
-    google()
-    jcenter()
-    gradlePluginPortal()
+    google() // Android plugin & support libraries
+    jcenter() // Main open-source repository
+    gradlePluginPortal() // Gradle plugin repository
     maven("https://dl.bintray.com/kotlin/kotlin-eap")
     maven("https://oss.sonatype.org/content/repositories/snapshots/")
 }
@@ -159,5 +60,3 @@ fun RepositoryHandler.maven(url: String) {
         setUrl(url)
     }
 }
-
-

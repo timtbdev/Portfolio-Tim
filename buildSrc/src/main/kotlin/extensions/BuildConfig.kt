@@ -11,6 +11,21 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package extensions
+
+import com.android.build.gradle.internal.dsl.BuildType
+
+// String
+fun BuildType.buildConfigStringField(name: String, value: String) {
+    this.buildConfigField("String", name, "\"$value\"")
+}
+
+// Int
+fun BuildType.buildConfigIntField(name: String, value: Int) {
+    this.buildConfigField("int", name, value.toString())
+}
+
+// Boolean
+fun BuildType.buildConfigBooleanField(name: String, value: Boolean) {
+    this.buildConfigField("boolean", name, value.toString())
+}

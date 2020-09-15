@@ -26,12 +26,6 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Run Spotless Apply
-        run: ./gradlew spotlessApply
-
-      - name: Run Spotless Check
-        run: ./gradlew spotlessCheck
-
       - name: Run Detekt
         run: ./gradlew detekt
 

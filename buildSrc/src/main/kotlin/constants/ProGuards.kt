@@ -11,6 +11,12 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package constants
+
+/** ProGuards ---------------------------------------------------------------------------------- */
+object ProGuards {
+    const val RETROFIT = "/settings/proguard_files/proguard-square-retrofit.pro"
+    const val GSON = "/settings/proguard_files/proguard-gson.pro"
+    const val ANDROID = "proguard-rules.pro"
+    const val TXT = "proguard-android-optimize.txt"
+}

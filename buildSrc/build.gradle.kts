@@ -16,7 +16,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
-    `kotlin-dsl-precompiled-script-plugins`
 }
 
 repositories {
@@ -26,6 +25,7 @@ repositories {
 }
 
 val compileKotlin: KotlinCompile by tasks
+
 compileKotlin.kotlinOptions {
     languageVersion = Versions.KOTLIN
 }
@@ -34,18 +34,23 @@ kotlinDslPluginOptions {
     experimentalWarning.set(false)
 }
 
+gradlePlugin {
+    plugins {
+        register("app-gradle-plugin") {
+            id = "app-gradle-plugin"
+            implementationClass = "plugins.AppGradlePlugin"
+        }
+    }
+}
+
 object Versions {
-    const val GRADLE = "4.0.1"
+    const val GRADLE = "4.2.0-alpha10"
     const val KOTLIN = "1.4.0"
     const val GOOGLE = "4.3.3"
     const val NAVIGATION = "2.3.0"
     const val PERFORMANCE = "1.3.1"
     const val CRASHLYTICS = "2.2.0"
     const val HILT = "2.28.3-alpha"
-    const val SPOTLESS = "5.1.1"
-    const val KTLINT = "0.38.1"
-    const val DETEKT = "1.12.0-RC1"
-    const val VERSION_UPDATE = "0.29.0"
 }
 
 object Plugins {
@@ -56,10 +61,6 @@ object Plugins {
     const val PERFORMANCE = "com.google.firebase:perf-plugin:"
     const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:"
     const val HILT = "com.google.dagger:hilt-android-gradle-plugin:"
-    const val SPOTLESS = "com.diffplug.spotless:spotless-plugin-gradle:"
-    const val KTLINT = "com.pinterest:ktlint:"
-    const val DETEKT = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:"
-    const val VERSION_UPDATE = "com.github.ben-manes:gradle-versions-plugin:"
 }
 
 object Libs {
@@ -69,10 +70,6 @@ object Libs {
     const val PERFORMANCE = Plugins.PERFORMANCE + Versions.PERFORMANCE
     const val CRASHLYTICS = Plugins.CRASHLYTICS + Versions.CRASHLYTICS
     const val HILT = Plugins.HILT + Versions.HILT
-    const val SPOTLESS = Plugins.SPOTLESS + Versions.SPOTLESS
-    const val KTLINT = Plugins.KTLINT + Versions.KTLINT
-    const val DETEKT = Plugins.DETEKT + Versions.DETEKT
-    const val VERSION_UPDATE = Plugins.VERSION_UPDATE + Versions.VERSION_UPDATE
 }
 
 dependencies {
@@ -83,8 +80,4 @@ dependencies {
     implementation(Libs.PERFORMANCE)
     implementation(Libs.CRASHLYTICS)
     implementation(Libs.HILT)
-    implementation(Libs.SPOTLESS)
-    implementation(Libs.KTLINT)
-    implementation(Libs.DETEKT)
-    implementation(Libs.VERSION_UPDATE)
 }

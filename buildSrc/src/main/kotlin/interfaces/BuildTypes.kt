@@ -11,6 +11,17 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package interfaces
+
+interface BuildTypes {
+
+    companion object {
+        const val DEBUG = "debug"
+        const val RELEASE = "release"
+    }
+
+    val isMinifyEnabled: Boolean
+    val isCrashlyticsEnabled: Boolean
+    val isTestCoverageEnabled: Boolean
+    val isDebuggable: Boolean
+}

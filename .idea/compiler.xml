@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="11">
+      <module name="domain" target="1.7" />
+      <module name="Domain" target="1.7" />
+      <module name="library" target="1.7" />
+      <module name="Portfolio-Tim.library.cache" target="11" />
+      <module name="Portfolio-Tim.library.domain" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

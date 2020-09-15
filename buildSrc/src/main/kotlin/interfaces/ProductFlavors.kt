@@ -11,6 +11,13 @@
  * limitations under the License.
  */
 
-include(
-    ":app"
-)
+package interfaces
+
+import com.android.build.gradle.internal.dsl.ProductFlavor
+import org.gradle.api.NamedDomainObjectContainer
+
+interface ProductFlavors {
+    val name: String
+    fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor
+    fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor
+}
