@@ -11,7 +11,11 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package constants
+
+enum class ModuleBuildType {
+    AndroidLibrary,
+    KotlinLibrary,
+    AppLibrary,
+    FeatureLibrary
+}

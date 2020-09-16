@@ -11,7 +11,13 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+plugins {
+    androidLibrary
+    cacheGradlePlugin
+}
+
+android {
+    androidExtensions {
+        isExperimental = true
+    }
+}

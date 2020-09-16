@@ -40,12 +40,16 @@ gradlePlugin {
             id = "app-gradle-plugin"
             implementationClass = "plugins.AppGradlePlugin"
         }
+        register("cache-gradle-plugin") {
+            id = "cache-gradle-plugin"
+            implementationClass = "plugins.CacheGradlePlugin"
+        }
     }
 }
 
 object Versions {
     const val GRADLE = "4.2.0-alpha10"
-    const val KOTLIN = "1.4.0"
+    const val KOTLIN = "1.4.10"
     const val GOOGLE = "4.3.3"
     const val NAVIGATION = "2.3.0"
     const val PERFORMANCE = "1.3.1"

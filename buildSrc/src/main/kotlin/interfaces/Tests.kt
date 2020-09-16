@@ -13,7 +13,6 @@
 
 package interfaces
 
-interface DepsKapts {
-    val dependencies: List<String>
-    val kapts: List<String>
+interface Tests {
+    val tests: List<String>
 }

@@ -11,3 +11,10 @@
  * limitations under the License.
  */
 
+package interfaces
+
+interface DepTestKapt {
+    val dependency: String
+    val test: String
+    val kapt: String
+}

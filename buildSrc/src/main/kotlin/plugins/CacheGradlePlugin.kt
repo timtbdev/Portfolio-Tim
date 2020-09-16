@@ -13,8 +13,8 @@
 
 package plugins
 
-import constants.ModuleBuildType.AppLibrary
-import constants.ModuleType.AppModule
+import constants.ModuleBuildType.AndroidLibrary
+import constants.ModuleType.CacheModule
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,11 +22,11 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-open class AppGradlePlugin : Plugin<Project> {
+open class CacheGradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.configurePlugins(AppLibrary)
-        project.configureAndroid(AppLibrary)
-        project.configureDependencies(AppModule)
+        project.configurePlugins(AndroidLibrary)
+        project.configureAndroid(AndroidLibrary)
+        project.configureDependencies(CacheModule)
 
         project.afterEvaluate {
             with(project) {
@@ -42,11 +42,11 @@ open class AppGradlePlugin : Plugin<Project> {
                                 "kotlinx.coroutines.InternalCoroutinesApi,",
                                 "kotlinx.coroutines.FlowPreview"
                             )
-                            useIR = true
                         }
                     }
                 }
             }
         }
+
     }
 }

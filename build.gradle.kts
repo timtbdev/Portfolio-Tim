@@ -23,7 +23,11 @@ plugins {
 }
 
 buildscript {
+    val kotlin_version by extra("1.4.10")
     repositories.applyDefault()
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
 }
 
 allprojects {
@@ -54,11 +58,6 @@ subprojects {
     addDetekt
     detekt {
         parallel = true
-    }
-
-    tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions.freeCompilerArgs +=
-            "-Xuse-experimental=" + "kotlin.Experimental," + "kotlinx.coroutines.ExperimentalCoroutinesApi," + "kotlinx.coroutines.InternalCoroutinesApi," + "kotlinx.coroutines.FlowPreview"
     }
 }
 

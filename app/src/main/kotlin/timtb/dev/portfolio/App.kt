@@ -11,7 +11,10 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package timtb.dev.portfolio
+
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class App : Application()
