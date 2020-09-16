@@ -15,16 +15,10 @@ package constants
 
 /** Resources ---------------------------------------------------------------------------------- */
 object Resources {
-
-    object App {
+    object Default {
         val javaDirs = arrayListOf("src/main/kotlin")
         val resDirs = arrayListOf("src/main/res")
         const val testDir = "src/test/kotlin"
         const val androidTestDir = "src/androidTest/kotlin"
-    }
-
-    object Domain {
-        val javaDirs = arrayListOf("src/main/kotlin")
-        const val testDir = "src/test/kotlin"
     }
 }

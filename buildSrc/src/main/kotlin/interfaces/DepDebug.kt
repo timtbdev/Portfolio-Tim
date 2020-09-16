@@ -11,7 +11,9 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package interfaces
+
+interface DepDebug {
+    val dependency: String
+    val debug: String
+}

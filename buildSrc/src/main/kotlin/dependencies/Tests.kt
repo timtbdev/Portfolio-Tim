@@ -15,9 +15,9 @@ package dependencies
 
 import constants.Libs
 import constants.Versions
-import interfaces.Deps
+import interfaces.Tests
 
-object Tests : Deps {
+object Tests : Tests {
 
     // Libraries -----------------------------------------------------------------------------------
     private const val JUPITER_API = Libs.JUNIT_JUPITER_API + Versions.JUNIT_JUPITER
@@ -27,8 +27,8 @@ object Tests : Deps {
     private const val MOCKK_ANDROID = Libs.MOCKK_ANDROID + Versions.MOCKK
     private const val JUNIT4 = Libs.JUNIT4 + Versions.JUNIT4
 
-    // Dependencies --------------------------------------------------------------------------------
-    override val dependencies: List<String>
+    // Test dependencies ---------------------------------------------------------------------------
+    override val tests: List<String>
         get() = listOf(
             JUPITER_API,
             JUPITER_PARAMS,

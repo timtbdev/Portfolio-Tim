@@ -19,14 +19,25 @@ import interfaces.DepsTests
 
 object Kotlin : DepsTests {
     // Libraries -----------------------------------------------------------------------------------
-    private const val KOTLIN = Libs.KOTLIN + Versions.KOTLIN
-    private const val KOTLIN_JUNIT = Libs.KOTLIN_JUNIT + Versions.KOTLIN
+    const val STDLIB = Libs.KOTLIN_STDLIB + Versions.KOTLIN
+    const val JUNIT = Libs.KOTLIN_JUNIT + Versions.KOTLIN
 
-    // Dependencies --------------------------------------------------------------------------------
+    object Coroutines {
+        const val CORE = Libs.COROUTINES_CORE + Versions.COROUTINES
+        const val ANDROID = Libs.COROUTINES_ANDROID + Versions.COROUTINES
+        const val TEST = Libs.COROUTINES_TEST + Versions.COROUTINES
+    }
+
     override val dependencies: List<String>
-        get() = listOf(KOTLIN)
-
-    // Tests ---------------------------------------------------------------------------------------
+        get() = listOf(
+            STDLIB,
+            Coroutines.CORE,
+            Coroutines.ANDROID
+        )
     override val tests: List<String>
-        get() = listOf(KOTLIN_JUNIT)
+        get() = listOf(
+            JUNIT,
+            Coroutines.TEST
+        )
+
 }

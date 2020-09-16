@@ -60,3 +60,13 @@ fun DependencyHandler.androidTestImplementationAll(list: List<String>) {
 // API ---------------------------------------------------------------------------------------------
 fun DependencyHandler.api(dependencyNotation: String): Dependency? =
     add("api", dependencyNotation)
+
+// DebugImplementation -----------------------------------------------------------------------------
+fun DependencyHandler.debugImplementation(dependencyNotation: String): Dependency? =
+    add("debugImplementation", dependencyNotation)
+
+fun DependencyHandler.debugImplementationAll(list: List<String>) {
+    list.forEach {
+        debugImplementation(it)
+    }
+}

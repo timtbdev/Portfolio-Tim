@@ -23,9 +23,16 @@ import org.gradle.plugin.use.PluginDependencySpec
 val PluginDependenciesSpec.androidApplication: PluginDependencySpec
     get() = id(Plugins.ANDROID_APPLICATION)
 
+// Android Library Plugin Dependency Extension -----------------------------------------------------
+val PluginDependenciesSpec.androidLibrary: PluginDependencySpec
+    get() = id(Plugins.ANDROID_LIBRARY)
+
 // Module Plugin Dependency Extensions -------------------------------------------------------------
 val PluginDependenciesSpec.appGradlePlugin: PluginDependencySpec
     get() = id(Plugins.APP_GRADLE_PLUGIN)
+
+val PluginDependenciesSpec.cacheGradlePlugin: PluginDependencySpec
+    get() = id(Plugins.CACHE_GRADLE_PLUGIN)
 
 // Static Analyzer Plugin Dependency Extensions ----------------------------------------------------
 // DependencyUpdate

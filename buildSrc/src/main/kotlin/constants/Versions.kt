@@ -22,11 +22,10 @@ object Versions {
     const val DETEKT = "1.13.1"
 
     // Kotlin --------------------------------------------------------------------------------------
-    const val KOTLIN = "1.4.0"
+    const val KOTLIN = "1.4.10"
     const val COROUTINES = "1.3.9"
 
     // Dependency Injections -----------------------------------------------------------------------
-    const val JAVAX_INJECT = "1"
     const val HILT = "2.28.3-alpha"
 
     // AndroidX ------------------------------------------------------------------------------------
@@ -51,6 +50,8 @@ object Versions {
     const val APP_STARTUP = "1.0.0-alpha02"
     const val BROWSER = "1.2.0"
     const val GOOGLE_PLAY = "1.8.1"
+    const val COMPOSE = "1.0.0-alpha01"
+    const val DATA_STORE = "1.0.0-alpha01"
 
     // AndroidX Tests ------------------------------------------------------------------------------
     const val TEST_CORE = "1.0.0"

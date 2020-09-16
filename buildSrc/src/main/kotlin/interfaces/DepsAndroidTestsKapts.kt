@@ -11,7 +11,11 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package interfaces
+
+interface DepsAndroidTestsKapts {
+    val dependencies: List<String>
+    val tests: List<String>
+    val androidTests: List<String>
+    val kapts: List<String>
+}

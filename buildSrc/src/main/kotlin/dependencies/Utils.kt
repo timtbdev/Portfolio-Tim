@@ -20,9 +20,9 @@ import interfaces.Deps
 object Utils : Deps {
 
     // Libraries -----------------------------------------------------------------------------------
-    private const val LEAK_CANARY = Libs.LEAK_CANARY + Versions.LEAK_CANARY
-    private const val TIMBER = Libs.TIMBER + Versions.TIMBER
-    private const val INK_PAGE_INDICATOR = Libs.INK_PAGE_INDICATOR + Versions.INK_PAGE_INDICATOR
+    const val LEAK_CANARY = Libs.LEAK_CANARY + Versions.LEAK_CANARY
+    const val TIMBER = Libs.TIMBER + Versions.TIMBER
+    const val INK_PAGE_INDICATOR = Libs.INK_PAGE_INDICATOR + Versions.INK_PAGE_INDICATOR
 
     // Dependencies --------------------------------------------------------------------------------
     override val dependencies: List<String>
@@ -31,12 +31,4 @@ object Utils : Deps {
             TIMBER,
             INK_PAGE_INDICATOR
         )
-
-    object Modules {
-        val app_dependencies: List<String>
-            get() = listOf(
-                LEAK_CANARY,
-                TIMBER
-            )
-    }
 }

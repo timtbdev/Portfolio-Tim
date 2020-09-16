@@ -35,4 +35,5 @@ object Plugins {
 
     // Modules Plugins
     const val APP_GRADLE_PLUGIN = "app-gradle-plugin"
+    const val CACHE_GRADLE_PLUGIN = "cache-gradle-plugin"
 }

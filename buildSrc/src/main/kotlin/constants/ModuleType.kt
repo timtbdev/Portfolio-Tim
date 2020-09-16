@@ -11,7 +11,14 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package constants
+
+enum class ModuleType {
+    AppModule,
+    DomainModule,
+    DataModule,
+    CacheModule,
+    RemoteModule,
+    FeatureModule,
+    CoreModule
+}

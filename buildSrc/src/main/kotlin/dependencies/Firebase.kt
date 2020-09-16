@@ -21,14 +21,14 @@ object Firebase : Deps {
 
     // Libraries -----------------------------------------------------------------------------------
     private const val PERFORMANCE = Libs.PERFORMANCE + Versions.PERFOFRMANCE
-    private const val ANALYTICS_KTX = Libs.ANALYTICS_KTX + Versions.ANALYTICS
+    private const val ANALYTICS = Libs.ANALYTICS + Versions.ANALYTICS
     private const val CRASHLYTICS = Libs.CRASHLYTICS + Versions.CRASHLYTICS
 
     // Dependencies --------------------------------------------------------------------------------
     override val dependencies: List<String>
         get() = listOf(
             PERFORMANCE,
-            ANALYTICS_KTX,
+            ANALYTICS,
             CRASHLYTICS
         )
 }

@@ -19,11 +19,9 @@ plugins {
 }
 
 android {
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    androidExtensions {
+        isExperimental = true
     }
-
     applicationVariants.forEach { variant ->
         variant.outputs.forEach { output ->
             val outputImpl = output as BaseVariantOutputImpl

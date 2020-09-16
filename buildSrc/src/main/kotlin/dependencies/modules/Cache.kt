@@ -11,27 +11,33 @@
  * limitations under the License.
  */
 
-package dependencies
+package dependencies.modules
 
-import constants.Libs
-import constants.Versions
-import interfaces.DepsTests
+import dependencies.Androidx
+import dependencies.Kotlin
+import interfaces.DepsTestsKapts
 
-object Coroutines : DepsTests {
-
-    // Libraries -----------------------------------------------------------------------------------
-    private const val COROUTINES = Libs.COROUTINES + Versions.COROUTINES
-    private const val COROUTINES_ANDROID = Libs.COROUTINES_ANDROID + Versions.COROUTINES
-    private const val COROUTINES_TEST = Libs.COROUTINES_TEST + Versions.COROUTINES
+object Cache : DepsTestsKapts {
 
     // Dependencies --------------------------------------------------------------------------------
     override val dependencies: List<String>
         get() = listOf(
-            COROUTINES,
-            COROUTINES_ANDROID
-        )
+            Kotlin.dependencies,
+            Androidx.Room.dependencies,
+            Androidx.DaggerHilt.dependencies
+        ).flatten()
 
     // Tests ---------------------------------------------------------------------------------------
     override val tests: List<String>
-        get() = listOf(COROUTINES_TEST)
+        get() = listOf(
+            Kotlin.tests,
+            listOf(Androidx.Room.test)
+        ).flatten()
+
+    // Kapts ---------------------------------------------------------------------------------------
+    override val kapts: List<String>
+        get() = listOf(
+            Androidx.Room.kapt,
+            Androidx.DaggerHilt.kapt
+        )
 }

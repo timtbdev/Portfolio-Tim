@@ -11,7 +11,9 @@
  * limitations under the License.
  */
 
-include(
-    ":app",
-    ":cache"
-)
+package interfaces
+
+interface DepsAndroidTest {
+    val dependencies: List<String>
+    val androidTest: String
+}

@@ -15,11 +15,13 @@ package plugins
 
 import com.android.build.gradle.BaseExtension
 import constants.*
-import dependencies.*
-import extensions.buildConfigStringField
-import extensions.implementAll
-import extensions.kaptAll
-import extensions.testImplementationAll
+import constants.ModuleBuildType.*
+import constants.ModuleType.AppModule
+import constants.ModuleType.CacheModule
+import constants.Resources.Default
+import dependencies.modules.App
+import dependencies.modules.Cache
+import extensions.*
 import interfaces.BuildTypes
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -27,112 +29,147 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
-internal fun Project.configureAppPlugins() {
-    apply(plugin = Plugins.KOTLIN_ANDROID)
-    apply(plugin = Plugins.KOTLIN_ANDROID_EXTENSIONS)
+// Configure Plugins -------------------------------------------------------------------------------
+internal fun Project.configurePlugins(buildType: ModuleBuildType) {
+
+    when (buildType) {
+        AppLibrary, FeatureLibrary, AndroidLibrary -> {
+            apply(plugin = Plugins.KOTLIN_ANDROID)
+            apply(plugin = Plugins.KOTLIN_ANDROID_EXTENSIONS)
+            if (buildType == AppLibrary || buildType == FeatureLibrary) {
+                apply(plugin = Plugins.NAVIGATION)
+                apply(plugin = Plugins.GOOGLE)
+                apply(plugin = Plugins.FIREBASE_CRASHLYTICS)
+                apply(plugin = Plugins.FIREBASE_PERFORMANCE)
+            }
+            apply(plugin = Plugins.HILT)
+        }
+        KotlinLibrary -> {
+            apply(plugin = Plugins.KOTLIN)
+        }
+    }
     apply(plugin = Plugins.KOTLIN_KAPT)
-    apply(plugin = Plugins.NAVIGATION)
-    apply(plugin = Plugins.HILT)
-    apply(plugin = Plugins.GOOGLE)
-    apply(plugin = Plugins.FIREBASE_CRASHLYTICS)
-    apply(plugin = Plugins.FIREBASE_PERFORMANCE)
 }
 
+// Configure Android -------------------------------------------------------------------------------
 private typealias AndroidBaseExtension = BaseExtension
 
-internal fun Project.configureAndroidApp() = this.extensions.getByType<AndroidBaseExtension>().run {
+// App Android configuration
+internal fun Project.configureAndroid(buildType: ModuleBuildType) =
+    this.extensions.getByType<AndroidBaseExtension>().run {
 
-    compileSdkVersion(Build.COMPILE_SDK)
-    buildToolsVersion(Build.BUILD_TOOLS)
+        compileSdkVersion(Build.COMPILE_SDK)
+        buildToolsVersion(Build.BUILD_TOOLS)
 
-    defaultConfig {
-        applicationId = Build.App.ID
-        minSdkVersion(Build.MIN_SDK)
-        targetSdkVersion(Build.TARGET_SDK)
-        versionCode = Build.App.VERSION_CODE
-        versionName = Build.App.VERSION_NAME
-        vectorDrawables.useSupportLibrary = true
-        multiDexEnabled = true
-
-        testInstrumentationRunner = Build.ANDROID_JUNIT_RUNNER
-    }
-
-    buildTypes {
-        getByName(BuildTypes.DEBUG) {
-            buildConfigStringField(
-                "API_BASE",
-                "http://www.timtb.dev/portfolio/api/"
-            )
-            buildConfigStringField(
-                "IMAGE_URL",
-                "http://www.timtb.dev/portfolio/images/"
-            )
-            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            isDebuggable = BuildTypeDebug.isDebuggable
-            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-            manifestPlaceholders["crashlyticsEnabled"] = BuildTypeDebug.isCrashlyticsEnabled
+        defaultConfig {
+            if (buildType == AppLibrary) {
+                applicationId = Build.App.ID
+                versionCode = Build.App.VERSION_CODE
+                versionName = Build.App.VERSION_NAME
+            }
+            minSdkVersion(Build.MIN_SDK)
+            targetSdkVersion(Build.TARGET_SDK)
+            vectorDrawables.useSupportLibrary = true
+            multiDexEnabled = true
+            testInstrumentationRunner = Build.ANDROID_JUNIT_RUNNER
         }
-        getByName(BuildTypes.RELEASE) {
-            buildConfigStringField(
-                "API_BASE",
-                "http://www.timtb.dev/portfolio/api/"
-            )
-            buildConfigStringField(
-                "IMAGE_URL",
-                "http://www.timtb.dev/portfolio/images/"
-            )
-            // Enables code shrinking for the release build type.
-            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            isDebuggable = BuildTypeRelease.isDebuggable
-            isShrinkResources = BuildTypeRelease.isShrinkResources
-            manifestPlaceholders["crashlyticsEnabled"] = BuildTypeRelease.isCrashlyticsEnabled
-            proguardFiles(ProGuards.RETROFIT)
-            proguardFiles(ProGuards.GSON)
-            proguardFiles(getDefaultProguardFile(ProGuards.TXT), ProGuards.ANDROID)
+
+        buildTypes {
+            getByName(BuildTypes.DEBUG) {
+                if (buildType == AppLibrary) {
+                    buildConfigStringField(
+                        "API_BASE",
+                        "http://www.timtb.dev/portfolio/api/"
+                    )
+                    buildConfigStringField(
+                        "IMAGE_URL",
+                        "http://www.timtb.dev/portfolio/images/"
+                    )
+                }
+                isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+                isDebuggable = BuildTypeDebug.isDebuggable
+                isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+                manifestPlaceholders["crashlyticsEnabled"] = BuildTypeDebug.isCrashlyticsEnabled
+            }
+            getByName(BuildTypes.RELEASE) {
+                if (buildType == AppLibrary) {
+                    buildConfigStringField(
+                        "API_BASE",
+                        "http://www.timtb.dev/portfolio/api/"
+                    )
+                    buildConfigStringField(
+                        "IMAGE_URL",
+                        "http://www.timtb.dev/portfolio/images/"
+                    )
+                    isShrinkResources = BuildTypeRelease.isShrinkResources
+                    proguardFiles(ProGuards.RETROFIT)
+                    proguardFiles(ProGuards.GSON)
+                    proguardFiles(getDefaultProguardFile(ProGuards.TXT), ProGuards.ANDROID)
+                }
+                // Enables code shrinking for the release build type.
+                isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
+                isDebuggable = BuildTypeRelease.isDebuggable
+                manifestPlaceholders["crashlyticsEnabled"] = BuildTypeRelease.isCrashlyticsEnabled
+            }
         }
-    }
-
-    flavorDimensions(ProductDimension.ENVIRONMENT)
-    productFlavors {
-        ProductFlavorDev.appCreate(this)
-        ProductFlavorPro.appCreate(this)
-    }
-
-    buildFeatures.viewBinding = true
-    buildFeatures.buildConfig = true
-    dataBinding.isEnabled = true
-
-    @Suppress("UnstableApiUsage")
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    lintOptions {
-        isAbortOnError = false
-        isIgnoreWarnings = true
-    }
-
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-        unitTests.isReturnDefaultValues = true
-    }
-
-    sourceSets {
-        getByName("main") {
-            java.setSrcDirs(Resources.App.javaDirs)
-            res.setSrcDirs(Resources.App.resDirs)
+        flavorDimensions(ProductDimension.ENVIRONMENT)
+        when (buildType) {
+            AppLibrary -> {
+                productFlavors {
+                    ProductFlavorDev.appCreate(this)
+                    ProductFlavorPro.appCreate(this)
+                }
+            }
+            else -> {
+                productFlavors {
+                    ProductFlavorDev.libraryCreate(this)
+                    ProductFlavorPro.libraryCreate(this)
+                }
+            }
         }
-        getByName("test") {
-            java.srcDir(Resources.App.testDir)
-        }
-        getByName("androidTest") {
-            java.srcDir(Resources.App.androidTestDir)
-        }
-    }
 
-    packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
+        if (buildType == AppLibrary || buildType == FeatureLibrary) {
+            buildFeatures.viewBinding = true
+            buildFeatures.buildConfig = true
+            buildFeatures.compose = true
+            dataBinding.isEnabled = true
+
+            composeOptions {
+                kotlinCompilerExtensionVersion = Versions.COMPOSE
+            }
+        }
+
+        @Suppress("UnstableApiUsage")
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+
+        lintOptions {
+            isAbortOnError = false
+            isIgnoreWarnings = true
+        }
+
+        testOptions {
+            unitTests.isIncludeAndroidResources = true
+            unitTests.isReturnDefaultValues = true
+        }
+
+        sourceSets {
+            getByName("main") {
+                java.setSrcDirs(Default.javaDirs)
+                res.setSrcDirs(Default.resDirs)
+            }
+            getByName("test") {
+                java.srcDir(Default.testDir)
+            }
+            getByName("androidTest") {
+                java.srcDir(Default.androidTestDir)
+            }
+        }
+
+        packagingOptions {
+            exclude("META-INF/DEPENDENCIES")
         exclude("META-INF/LICENSE")
         exclude("META-INF/LICENSE.txt")
         exclude("META-INF/license.txt")
@@ -144,15 +181,22 @@ internal fun Project.configureAndroidApp() = this.extensions.getByType<AndroidBa
     }
 }
 
-internal fun Project.configureAppDependencies() = this.dependencies {
-    add("implementation", fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementAll(Kotlin.dependencies)
-    implementAll(Coroutines.dependencies)
-    implementAll(Androidx.Modules.app_dependencies)
-    implementAll(Di.dependencies)
-    implementAll(Firebase.dependencies)
-    implementAll(Utils.Modules.app_dependencies)
-    kaptAll(Kapts.Modules.app_dependencies)
-    testImplementationAll(Kotlin.tests)
-    testImplementationAll(Coroutines.tests)
+// Configure dependencies --------------------------------------------------------------------------
+// App dependencies
+internal fun Project.configureDependencies(module: ModuleType) = this.dependencies {
+    when (module) {
+        AppModule -> {
+            add("implementation", fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+            implementAll(App.dependencies)
+            kaptAll(App.kapts)
+            testImplementationAll(App.tests)
+            androidTestImplementationAll(App.androidTests)
+        }
+        CacheModule -> {
+            implementAll(Cache.dependencies)
+            kaptAll(Cache.kapts)
+            testImplementationAll(Cache.tests)
+        }
+    }
+
 }

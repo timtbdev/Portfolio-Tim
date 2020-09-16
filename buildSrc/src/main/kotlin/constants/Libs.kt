@@ -16,16 +16,15 @@ package constants
 object Libs {
 
     // Kotlin --------------------------------------------------------------------------------------
-    const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:"
+    const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:"
     const val KOTLIN_JUNIT = "org.jetbrains.kotlin:kotlin-test-junit:"
 
     // Coroutines ----------------------------------------------------------------------------------
-    const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-core:"
+    const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:"
     const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:"
     const val COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:"
 
     // Dependency Injection ------------------------------------------------------------------------
-    const val JAVAX_INJECT = "javax.inject:javax.inject:"
     const val HILT_ANDROID = "com.google.dagger:hilt-android:"
     const val HILT_KAPT = "com.google.dagger:hilt-android-compiler:"
 
@@ -35,35 +34,35 @@ object Libs {
     const val APP_COMPAT = "androidx.appcompat:appcompat:"
 
     // Fragment
-    const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:"
+    const val FRAGMENT = "androidx.fragment:fragment-ktx:"
     const val FRAGMENT_TEST = "androidx.fragment:fragment-testing:"
 
     // ViewModel
-    const val VM_KTX = "androidx.lifecycle:lifecycle-viewmodel-ktx:"
-    const val VM_SAVED_STATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:"
+    const val VIEW_MODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:"
+    const val VIEW_MODEL_SAVED_STATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:"
 
     // Live Data
-    const val LIVE_DATA_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:"
+    const val LIVE_DATA = "androidx.lifecycle:lifecycle-livedata-ktx:"
     const val LIVE_DATA_KAPT = "androidx.lifecycle:lifecycle-compiler:"
 
     // Navigation
-    const val NAV_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:"
+    const val NAV_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:"
     const val NAV_UI_KTX = "androidx.navigation:navigation-ui-ktx:"
     const val NAV_DYNAMIC = "androidx.navigation:navigation-dynamic-features-fragment:"
     const val NAV_TEST = "androidx.navigation:navigation-testing:"
 
     // Room
-    const val ROOM = "androidx.room:room-runtime:"
+    const val ROOM_RUNTIME = "androidx.room:room-runtime:"
     const val ROOM_KTX = "androidx.room:room-ktx:"
     const val ROOM_KAPT = "androidx.room:room-compiler:"
     const val ROOM_TEST = "androidx.room:room-testing:"
 
     // WorkManager
-    const val WORK_KTX = "androidx.work:work-runtime-ktx:"
+    const val WORK_RUNTIME = "androidx.work:work-runtime-ktx:"
     const val WORK_TEST = "androidx.work:work-testing:"
 
     // Paging
-    const val PAGING_KTX = "androidx.paging:paging-runtime-ktx:"
+    const val PAGING_RUNTIME = "androidx.paging:paging-runtime-ktx:"
     const val PAGING_COMMON = "androidx.paging:paging-common:"
 
     // UI
@@ -76,8 +75,21 @@ object Libs {
     const val VD_CORE = "androidx.vectordrawable:vectordrawable:" // VD = VectorDrawable
     const val VD_ANIMATED = "androidx.vectordrawable:vectordrawable-animated:"
 
+    // Jetpack Compose
+    const val COMPOSE_UI = "androidx.compose.ui:ui:"
+    const val COMPOSE_UI_TOOLING = "androidx.ui:ui-tooling:"
+    const val COMPOSE_FOUNDATION = "androidx.compose.foundation:foundation:"
+    const val COMPOSE_MATERIAL_DESIGN = "androidx.compose.material:material:"
+    const val COMPOSE_LIVE_DATA = "androidx.compose.runtime:runtime-livedata:"
+    const val COMPOSE_UI_TEST = "androidx.ui:ui-test:"
+
+    // DataStore
+    const val DATA_STORE_CORE = "androidx.datastore:datastore-preferences:"
+    const val DATA_STORE_PREFERENCE = "androidx.datastore:datastore-core:"
+
+
     // Utils
-    const val PREFERENCE_KTX = "androidx.preference:preference-ktx:"
+    const val PREFERENCE = "androidx.preference:preference-ktx:"
     const val APP_STARTUP = "androidx.startup:startup-runtime:"
     const val BROWSER = "androidx.browser:browser:"
     const val GOOGLE_PLAY = "com.google.android.play:core-ktx:"
@@ -90,9 +102,9 @@ object Libs {
     const val TEST_RULES = "androidx.test:rules:"
 
     // Assertions
-    const val JUNIT_KTX = "androidx.test.ext:junit:"
+    const val JUNIT = "androidx.test.ext:junit:"
     const val GOOGLE_TRUTH = "com.google.truth:truth:"
-    const val TRUTH_KTX = "androidx.test.ext:truth:"
+    const val TRUTH = "androidx.test.ext:truth:"
 
     // UI Tests
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:"
@@ -101,7 +113,7 @@ object Libs {
 
     // Firebase ------------------------------------------------------------------------------------
     const val PERFORMANCE = "com.google.firebase:firebase-perf:"
-    const val ANALYTICS_KTX = "com.google.firebase:firebase-analytics-ktx:"
+    const val ANALYTICS = "com.google.firebase:firebase-analytics-ktx:"
     const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics:"
 
     // Network -------------------------------------------------------------------------------------
